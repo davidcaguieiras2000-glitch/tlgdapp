@@ -41,7 +41,7 @@ function loadGoogleMaps() {
   return mapsPromise;
 }
 
-export function GoogleRouteMap({ origin, destination }: { origin?: RoutePoint; destination?: RoutePoint }) {
+export function GoogleRouteMap({ origin, destination }: { origin?: RoutePoint | undefined; destination?: RoutePoint | undefined }) {
   const elementRef = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
 
