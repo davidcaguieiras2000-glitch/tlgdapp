@@ -1,0 +1,2 @@
+import { createFileRoute } from "@tanstack/react-router"; import { CalculatorPage } from "@/components/OperationsPages";
+export const Route=createFileRoute("/calculo")({head:()=>({meta:[{title:"Cálculo de Rota — TLGD"},{name:"description",content:"Calcule investimento e lucro de viagens TLGD."},{property:"og:title",content:"Cálculo de Rota — TLGD"},{property:"og:description",content:"Calcule investimento e lucro de viagens TLGD."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary"}]}),component:CalculatorPage});

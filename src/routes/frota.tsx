@@ -1,0 +1,2 @@
+import { createFileRoute } from "@tanstack/react-router"; import { FleetPage } from "@/components/OperationsPages";
+export const Route=createFileRoute("/frota")({head:()=>({meta:[{title:"Frota — TLGD"},{name:"description",content:"Gestão da frota de ônibus TLGD."},{property:"og:title",content:"Frota — TLGD"},{property:"og:description",content:"Gestão da frota de ônibus TLGD."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary"}]}),component:FleetPage});

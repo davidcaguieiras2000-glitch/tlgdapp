@@ -6,5 +6,7 @@
 > user will likely lose their project history.
 >
 > Commits you push to the connected branch sync back to Lovable and show up in
-> the editor, so keep the branch in a working state.
+> Lovable.
 <!-- LOVABLE:END -->
+
+- Keep TLGD operational sections as separate TanStack routes sharing one app shell, so navigation remains deep-linkable and consistent.

@@ -1,0 +1,2 @@
+import { createFileRoute } from "@tanstack/react-router"; import { FuelPage } from "@/components/OperationsPages";
+export const Route=createFileRoute("/combustivel")({head:()=>({meta:[{title:"Combustível — TLGD"},{name:"description",content:"Preços e abastecimentos da frota TLGD."},{property:"og:title",content:"Combustível — TLGD"},{property:"og:description",content:"Preços e abastecimentos da frota TLGD."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary"}]}),component:FuelPage});
