@@ -1,24 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { BusFront, Fuel, MapPin, Route as RouteIcon, Search, Signpost, WalletCards, Wrench } from "lucide-react";
+import { Button } from "@/components/Button";
+import { Card, Field, PageIntro, Stat } from "@/components/Ui";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({ meta: [
+    { title: "Painel de Operações — TLGD" }, { name: "description", content: "Gestão integrada de transporte, logística e operações TLGD." },
+    { property: "og:title", content: "Painel de Operações — TLGD" }, { property: "og:description", content: "Gestão integrada de transporte, logística e operações TLGD." },
+    { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
+  ]}), component: Dashboard,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+function Dashboard(){return <div className="space-y-6"><section className="overflow-hidden rounded-lg bg-brand-gradient p-6 sm:p-9"><p className="text-sm font-bold uppercase tracking-widest text-primary-foreground/75">Transporte · Logística · Gestão</p><h1 className="mt-2 text-3xl font-bold text-primary-foreground sm:text-4xl">Painel de Operações</h1><p className="mt-3 max-w-xl text-primary-foreground/80">Acompanhe rotas, consumo de combustível, custos de pedágio e condições de trânsito em tempo real.</p><div className="mt-5 flex flex-wrap gap-2 text-xs"><span className="rounded-full bg-background/15 px-3 py-2 text-primary-foreground">Diesel: R$ 5,98/L</span><span className="rounded-full bg-background/15 px-3 py-2 text-primary-foreground">Pedágio médio: R$ 15,19/eixo</span></div><div className="mt-6 grid gap-3 sm:grid-cols-2"><Button className="bg-background text-foreground hover:bg-background/90" onClick={()=>document.getElementById("planejar")?.scrollIntoView({behavior:"smooth"})}>Planejar rota</Button><Link to="/transito" className="inline-flex min-h-11 items-center justify-center rounded-md border border-primary-foreground/30 font-bold text-primary-foreground">Ver trânsito</Link></div></section><div className="grid gap-4 sm:grid-cols-2"><Stat label="Rotas registradas · 1 em andamento" value="4" icon={<RouteIcon/>}/><Stat label="Pontos de trânsito crítico · 1.729 km percorridos" value="8" icon={<BusFront/>}/></div><Card><h2 className="mb-5 flex items-center gap-2 text-xl font-bold"><WalletCards className="text-primary"/> Gastos Gerais</h2><div className="grid grid-cols-2 gap-4 lg:grid-cols-4"><Metric icon={<Fuel/>} label="Diesel" value="R$ 4.520,50"/><Metric icon={<Signpost/>} label="Pedágio" value="R$ 99,80"/><Metric icon={<Wrench/>} label="Manutenção" value="R$ 190,00"/><Metric icon={<WalletCards/>} label="Total" value="R$ 4.810,30" highlight/></div></Card><section id="planejar"><PageIntro title="Planejar rota no mapa" text="Busque origem e destino — distância, tempo e custos são calculados automaticamente."/><Card><div className="grid gap-5 md:grid-cols-[1fr_1fr_auto]"><Field label="Origem" placeholder="Ex: São Paulo" icon={<MapPin className="text-primary"/>}/><Field label="Destino" placeholder="Ex: Rio de Janeiro" icon={<MapPin className="text-info"/>}/><Link to="/rotas" className="self-end"><Button className="w-full"><Search size={17}/>Calcular rota</Button></Link></div></Card><div className="mt-4 grid h-64 place-items-center overflow-hidden rounded-lg border border-border bg-map-pattern"><div className="rounded-md bg-background/90 px-5 py-3 text-center shadow-lg"><MapPin className="mx-auto mb-2 text-primary"/><b>Mapa operacional do Brasil</b><small className="block text-muted-foreground">Selecione uma rota para visualizar</small></div></div></section></div>}
+function Metric({icon,label,value,highlight=false}:{icon:React.ReactNode;label:string;value:string;highlight?:boolean}){return <div className={highlight?"rounded-md border border-primary/30 bg-primary/5 p-4":"rounded-md bg-secondary p-4"}><span className={highlight?"text-primary":"text-success"}>{icon}</span><small className="mt-3 block text-muted-foreground">{label}</small><b className={highlight?"text-xl text-primary":"text-xl"}>{value}</b></div>}
