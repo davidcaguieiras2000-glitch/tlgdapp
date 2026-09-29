@@ -45,7 +45,13 @@ export function GoogleRouteMap({ origin, destination }: { origin?: RoutePoint | 
   const elementRef = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
 
+  const browserKey = import.meta.env["VITE_LOVABLE_CONNECTOR_GOOGLE_MAPS_BROWSER_KEY"];
+  const directionsUrl = origin && destination && browserKey
+    ? `https://www.google.com/maps/embed/v1/directions?key=${encodeURIComponent(browserKey)}&origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}&mode=driving`
+    : undefined;
+
   useEffect(() => {
+    if (directionsUrl) return;
     let active = true;
     loadGoogleMaps().then(() => {
       if (!active || !elementRef.current || !window.google?.maps) return;
@@ -75,8 +81,9 @@ export function GoogleRouteMap({ origin, destination }: { origin?: RoutePoint | 
       map.fitBounds(bounds, 56);
     }).catch(() => active && setFailed(true));
     return () => { active = false; };
-  }, [origin, destination]);
+  }, [origin, destination, directionsUrl]);
 
+  if (directionsUrl) return <iframe title="Mapa da rota planejada" aria-label="Mapa da rota planejada" src={directionsUrl} className="h-72 w-full overflow-hidden rounded-lg border border-border bg-secondary" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />;
   if (failed) return <div className="grid h-72 place-items-center rounded-lg border border-border bg-secondary text-center text-muted-foreground"><div><MapPin className="mx-auto mb-2 text-primary"/>Mapa temporariamente indisponível</div></div>;
   return <div ref={elementRef} aria-label="Mapa da rota planejada" className="h-72 overflow-hidden rounded-lg border border-border bg-secondary" />;
 }
