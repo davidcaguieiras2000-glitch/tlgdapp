@@ -1,0 +1,2 @@
+import { createFileRoute } from "@tanstack/react-router"; import { TollsPage } from "@/components/OperationsPages";
+export const Route=createFileRoute("/pedagios")({head:()=>({meta:[{title:"Pedágios — TLGD"},{name:"description",content:"Controle de pedágios e passagens TLGD."},{property:"og:title",content:"Pedágios — TLGD"},{property:"og:description",content:"Controle de pedágios e passagens TLGD."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary"}]}),component:TollsPage});

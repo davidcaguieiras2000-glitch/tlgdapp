@@ -1,0 +1,2 @@
+import { createFileRoute } from "@tanstack/react-router"; import { TrafficPage } from "@/components/OperationsPages";
+export const Route=createFileRoute("/transito")({head:()=>({meta:[{title:"Trânsito — TLGD"},{name:"description",content:"Condições das principais rodovias brasileiras."},{property:"og:title",content:"Trânsito — TLGD"},{property:"og:description",content:"Condições das principais rodovias brasileiras."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary"}]}),component:TrafficPage});
