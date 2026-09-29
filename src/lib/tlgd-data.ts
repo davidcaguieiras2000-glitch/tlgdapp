@@ -27,3 +27,18 @@ export const demand = [
   ["01:00 — 05:00", "Madrugada", "Baixa demanda", "low", "Poucas viagens programadas, ideal para manutenção"],
   ["09:00 — 12:00", "Manhã/Tarde", "Baixa demanda", "low", "Janela de menor movimento para revisões preventivas"],
 ];
+
+export const cityCoordinates: Record<string, { lat: number; lng: number }> = {
+  "belo horizonte": { lat: -19.9167, lng: -43.9345 },
+  "brasilia": { lat: -15.7939, lng: -47.8828 },
+  "curitiba": { lat: -25.4284, lng: -49.2733 },
+  "espirito santo": { lat: -20.3155, lng: -40.3128 },
+  "florianopolis": { lat: -27.5954, lng: -48.548 },
+  "maceio": { lat: -9.6498, lng: -35.7089 },
+  "porto alegre": { lat: -30.0346, lng: -51.2177 },
+  "recife": { lat: -8.0476, lng: -34.877 },
+  "rio de janeiro": { lat: -22.9068, lng: -43.1729 },
+  "salvador": { lat: -12.9777, lng: -38.5016 },
+  "sao paulo": { lat: -23.5505, lng: -46.6333 },
+  "vitoria": { lat: -20.3155, lng: -40.3128 },
+};

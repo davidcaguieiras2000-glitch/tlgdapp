@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Keep TLGD operational sections as separate TanStack routes sharing one app shell, so navigation remains deep-linkable and consistent.
+- Render maps with the Google Maps browser key, while route-cost estimates stay deterministic and user-triggered to avoid an open billable API proxy.
