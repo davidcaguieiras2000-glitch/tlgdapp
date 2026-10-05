@@ -3,7 +3,8 @@ import { BusFront, Calculator, Fuel, MapPin, Plus, RefreshCw, Search, Signpost, 
 import { Button } from "./Button";
 import { Card, DemandPanel, Field, PageIntro, Severity, Stat } from "./Ui";
 import { fuels, routes as initialRoutes, tolls } from "@/lib/tlgd-data";
-import { BUS_KM_PER_LITER, DIESEL_PRICE, estimateRoute, MAINTENANCE_PER_KM, TOLL_PER_KM } from "@/lib/route-estimate";
+import { BUS_KM_PER_LITER, costsForKm, DIESEL_PRICE, MAINTENANCE_PER_KM, TOLL_PER_KM } from "@/lib/route-estimate";
+import { planRoute } from "@/lib/route.functions";
 import { cn } from "@/lib/utils";
 import { GoogleRouteMap } from "./GoogleRouteMap";
 

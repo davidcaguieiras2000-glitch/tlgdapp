@@ -11,22 +11,19 @@ export function getCityPoint(city: string) {
   return cityCoordinates[normalizeCity(city)];
 }
 
+export function costsForKm(km: number) {
+  const liters = km / BUS_KM_PER_LITER;
+  return { km, liters, fuel: liters * DIESEL_PRICE, toll: km * TOLL_PER_KM, maintenance: km * MAINTENANCE_PER_KM };
+}
+
 export function estimateRoute(origin: string, destination: string) {
   const start = getCityPoint(origin);
   const end = getCityPoint(destination);
   if (!start || !end) return undefined;
-
-  const earthRadiusKm = 6371;
+  const R = 6371;
   const dLat = (end.lat - start.lat) * Math.PI / 180;
   const dLng = (end.lng - start.lng) * Math.PI / 180;
-  const lat1 = start.lat * Math.PI / 180;
-  const lat2 = end.lat * Math.PI / 180;
-  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
-  const directKm = earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const km = Math.round(directKm * 1.18);
-  const liters = km / BUS_KM_PER_LITER;
-  const fuel = liters * DIESEL_PRICE;
-  const toll = km * TOLL_PER_KM;
-  const maintenance = km * MAINTENANCE_PER_KM;
-  return { start, end, km, liters, fuel, toll, maintenance };
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(start.lat * Math.PI / 180) * Math.cos(end.lat * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+  const km = Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 1.18);
+  return { start, end, ...costsForKm(km) };
 }
