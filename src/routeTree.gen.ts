@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CalculoRouteImport } from './routes/calculo'
 import { Route as CombustivelRouteImport } from './routes/combustivel'
 import { Route as FrotaRouteImport } from './routes/frota'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as PedagiosRouteImport } from './routes/pedagios'
 import { Route as RotasRouteImport } from './routes/rotas'
 import { Route as TransitoRouteImport } from './routes/transito'
@@ -37,6 +38,11 @@ const FrotaRoute = FrotaRouteImport.update({
   path: '/frota',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PedagiosRoute = PedagiosRouteImport.update({
   id: '/pedagios',
   path: '/pedagios',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/calculo': typeof CalculoRoute
   '/combustivel': typeof CombustivelRoute
   '/frota': typeof FrotaRoute
+  '/login': typeof LoginRoute
   '/pedagios': typeof PedagiosRoute
   '/rotas': typeof RotasRoute
   '/transito': typeof TransitoRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/calculo': typeof CalculoRoute
   '/combustivel': typeof CombustivelRoute
   '/frota': typeof FrotaRoute
+  '/login': typeof LoginRoute
   '/pedagios': typeof PedagiosRoute
   '/rotas': typeof RotasRoute
   '/transito': typeof TransitoRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/calculo': typeof CalculoRoute
   '/combustivel': typeof CombustivelRoute
   '/frota': typeof FrotaRoute
+  '/login': typeof LoginRoute
   '/pedagios': typeof PedagiosRoute
   '/rotas': typeof RotasRoute
   '/transito': typeof TransitoRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/calculo'
     | '/combustivel'
     | '/frota'
+    | '/login'
     | '/pedagios'
     | '/rotas'
     | '/transito'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/calculo'
     | '/combustivel'
     | '/frota'
+    | '/login'
     | '/pedagios'
     | '/rotas'
     | '/transito'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/calculo'
     | '/combustivel'
     | '/frota'
+    | '/login'
     | '/pedagios'
     | '/rotas'
     | '/transito'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   CalculoRoute: typeof CalculoRoute
   CombustivelRoute: typeof CombustivelRoute
   FrotaRoute: typeof FrotaRoute
+  LoginRoute: typeof LoginRoute
   PedagiosRoute: typeof PedagiosRoute
   RotasRoute: typeof RotasRoute
   TransitoRoute: typeof TransitoRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FrotaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pedagios': {
       id: '/pedagios'
       path: '/pedagios'
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   CalculoRoute: CalculoRoute,
   CombustivelRoute: CombustivelRoute,
   FrotaRoute: FrotaRoute,
+  LoginRoute: LoginRoute,
   PedagiosRoute: PedagiosRoute,
   RotasRoute: RotasRoute,
   TransitoRoute: TransitoRoute,
