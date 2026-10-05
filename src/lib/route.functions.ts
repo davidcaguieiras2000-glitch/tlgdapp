@@ -5,8 +5,8 @@ const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_maps";
 type Point = { lat: number; lng: number };
 
 function headers() {
-  const lovable = process.env.LOVABLE_API_KEY;
-  const maps = process.env.GOOGLE_MAPS_API_KEY;
+  const lovable = process.env['LOVABLE_API_KEY'];
+  const maps = process.env['GOOGLE_MAPS_API_KEY'];
   if (!lovable || !maps) throw new Error("Credenciais do Google Maps ausentes");
   return { Authorization: `Bearer ${lovable}`, "X-Connection-Api-Key": maps };
 }
