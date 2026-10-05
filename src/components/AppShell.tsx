@@ -1,5 +1,7 @@
-import { Link, useRouterState } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useEffect, useState, type ReactNode } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import { BusFront, Calculator, CarFront, Fuel, Gauge, LayoutGrid, LogOut, Menu, MessageCircle, Route as RouteIcon, Signpost, X } from "lucide-react";
 import logo from "@/assets/tlgd-logo.jpg.asset.json";
 import { cn } from "@/lib/utils";
@@ -13,6 +15,14 @@ const nav = [
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const navigate = useNavigate();
+  const { session, loading, profile } = useAuth();
+  const isLogin = pathname === "/login";
+  useEffect(() => { if (!loading && !session && !isLogin) navigate({ to: "/login" }); }, [loading, session, isLogin, navigate]);
+  if (isLogin) return <>{children}</>;
+  if (loading || !session) return <div className="grid min-h-screen place-items-center bg-background text-muted-foreground">Carregando...</div>;
+  const name = profile?.full_name || profile?.phone || session.user.phone || "Usuário";
+  const logout = async () => { await supabase.auth.signOut(); navigate({ to: "/login" }); };
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b border-border bg-header/95 backdrop-blur">
@@ -43,7 +53,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <a href="https://wa.me/5521995888049" target="_blank" rel="noreferrer" className="mb-5 flex items-center gap-4 rounded-md bg-success/12 p-4 text-success">
             <MessageCircle size={28}/><span><strong className="block text-foreground">WhatsApp</strong><small className="text-muted-foreground">Fale conosco</small></span>
           </a>
-          <div className="flex items-center gap-3 px-2"><div className="grid size-11 place-items-center rounded-full bg-brand-gradient font-bold">D</div><div className="flex-1"><b>David Aguieiras</b><small className="block text-muted-foreground">Administrador</small></div><LogOut className="text-muted-foreground" /></div>
+          <div className="flex items-center gap-3 px-2"><div className="grid size-11 place-items-center rounded-full bg-brand-gradient font-bold">{name.charAt(0).toUpperCase()}</div><div className="min-w-0 flex-1"><b className="block truncate">{name}</b><small className="block text-muted-foreground">{profile?.role ?? "Administrador"}</small></div><button aria-label="Sair" onClick={logout} className="text-muted-foreground hover:text-foreground"><LogOut /></button></div>
         </div>
       </aside>
     </div>
