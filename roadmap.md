@@ -7,3 +7,6 @@
 - [x] Verify mobile and desktop layouts
 - [x] Apply demand severity colors
 - [x] Add automatic route costs, profit, and Google Maps route drawing
+- [x] Animated auto-refresh (30s) buttons
+- [x] SMS login page with profiles
+- [ ] SMS sending: user must enable Phone sign-in with an SMS provider in Cloud auth settings
