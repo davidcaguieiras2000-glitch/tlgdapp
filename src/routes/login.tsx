@@ -16,6 +16,12 @@ export const Route = createFileRoute("/login")({
 });
 
 
+const PUBLISHED_URL = "https://tlgdapp.lovable.app";
+function appUrl() {
+  const host = window.location.hostname;
+  return host.includes("preview") || host.includes("lovableproject.com") ? PUBLISHED_URL : window.location.origin;
+}
+
 function LoginPage() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -32,10 +38,10 @@ function LoginPage() {
   const send = async () => {
     if (!/^\S+@\S+\.\S+$/.test(phone.trim())) { setMsg("Informe um e-mail válido."); return; }
     setBusy(true); setMsg("");
-    const { error } = await supabase.auth.signInWithOtp({ email: phone.trim(), options: { data: { full_name: name.trim() }, emailRedirectTo: window.location.origin } });
+    const { error } = await supabase.auth.signInWithOtp({ email: phone.trim(), options: { data: { full_name: name.trim() }, emailRedirectTo: appUrl() } });
     setBusy(false);
     if (error) { setMsg("Não foi possível enviar o código: " + error.message); return; }
-    setStep("code"); setCooldown(60); setMsg("Código enviado. Confira seu e-mail (e a caixa de spam). Você também pode clicar no link do e-mail.");
+    setStep("code"); setCooldown(60); setMsg("E-mail enviado! Abra a mensagem e toque no botão de confirmação para entrar. Se vier um código, digite-o abaixo. Confira também o spam.");
   };
 
   const verify = async () => {
