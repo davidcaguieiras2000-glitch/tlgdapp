@@ -37,23 +37,27 @@ export const planRoute = createServerFn({ method: "POST" })
   })
   .handler(async ({ data }) => {
     const [o, d] = await Promise.all([geocode(data.origin), geocode(data.destination)]);
-    const res = await fetch(`${GATEWAY_URL}/routes/directions/v2:computeRoutes`, {
-      method: "POST",
-      headers: {
-        ...headers(),
-        "Content-Type": "application/json",
-        "X-Goog-FieldMask": "routes.distanceMeters,routes.duration",
-      },
-      body: JSON.stringify({
-        origin: { location: { latLng: { latitude: o.point.lat, longitude: o.point.lng } } },
-        destination: { location: { latLng: { latitude: d.point.lat, longitude: d.point.lng } } },
-        travelMode: "DRIVE",
-      }),
-    });
-    if (!res.ok) throw new Error(`Falha ao calcular rota [${res.status}]: ${await res.text()}`);
-    const json = (await res.json()) as { routes?: { distanceMeters?: number; duration?: string }[] };
-    const route = json.routes?.[0];
-    if (!route?.distanceMeters) throw new Error("Não foi encontrada rota rodoviária entre os endereços");
+    const ll = (p: Point) => ({ location: { latLng: { latitude: p.lat, longitude: p.lng } } });
+    type R = { distanceMeters?: number; duration?: string; legs?: { startLocation?: { latLng?: { latitude: number; longitude: number } }; endLocation?: { latLng?: { latitude: number; longitude: number } } }[] };
+    const compute = async (origin: object, destination: object): Promise<R | undefined> => {
+      const res = await fetch(`${GATEWAY_URL}/routes/directions/v2:computeRoutes`, {
+        method: "POST",
+        headers: { ...headers(), "Content-Type": "application/json", "X-Goog-FieldMask": "routes.distanceMeters,routes.duration,routes.legs.startLocation,routes.legs.endLocation" },
+        body: JSON.stringify({ origin, destination, travelMode: "DRIVE", regionCode: "BR", languageCode: "pt-BR" }),
+      });
+      if (!res.ok) { console.error(`computeRoutes [${res.status}]: ${await res.text()}`); return undefined; }
+      const json = (await res.json()) as { routes?: R[] };
+      return json.routes?.[0]?.distanceMeters ? json.routes[0] : undefined;
+    };
+    // Prefer Google's own address resolution (snaps to roads), then fall back to geocoded points.
+    const route =
+      (await compute({ address: `${data.origin}, Brasil` }, { address: `${data.destination}, Brasil` })) ??
+      (await compute(ll(o.point), ll(d.point)));
+    if (!route?.distanceMeters) throw new Error("Não foi encontrada rota rodoviária entre os endereços. Tente incluir cidade e estado (ex: Cuiabá, MT).");
+    const leg = route.legs?.[0];
+    const toPoint = (x: { latitude: number; longitude: number } | undefined, f: Point) => (x ? { lat: x.latitude, lng: x.longitude } : f);
+    o.point = toPoint(leg?.startLocation?.latLng, o.point);
+    d.point = toPoint(leg?.endLocation?.latLng, d.point);
     return {
       start: o.point,
       end: d.point,
