@@ -11,6 +11,17 @@ function headers() {
   return { Authorization: `Bearer ${lovable}`, "X-Connection-Api-Key": maps };
 }
 
+async function searchPlace(text: string): Promise<{ point: Point; label: string } | undefined> {
+  const res = await fetch(`${GATEWAY_URL}/places/v1/places:searchText`, {
+    method: "POST",
+    headers: { ...headers(), "Content-Type": "application/json", "X-Goog-FieldMask": "places.formattedAddress,places.location" },
+    body: JSON.stringify({ textQuery: text, regionCode: "BR", languageCode: "pt-BR", pageSize: 1 }),
+  });
+  if (!res.ok) { console.error(`searchText [${res.status}]: ${await res.text()}`); return undefined; }
+  const p = ((await res.json()) as { places?: { formattedAddress: string; location: { latitude: number; longitude: number } }[] }).places?.[0];
+  return p ? { point: { lat: p.location.latitude, lng: p.location.longitude }, label: p.formattedAddress } : undefined;
+}
+
 async function geocode(address: string): Promise<{ point: Point; label: string }> {
   const res = await fetch(
     `${GATEWAY_URL}/maps/api/geocode/json?address=${encodeURIComponent(address)}&region=br&components=country:BR&language=pt-BR`,
@@ -19,9 +30,15 @@ async function geocode(address: string): Promise<{ point: Point; label: string }
   if (!res.ok) throw new Error(`Falha ao localizar endereço [${res.status}]: ${await res.text()}`);
   const data = (await res.json()) as {
     status: string;
-    results?: { formatted_address: string; geometry: { location: Point } }[];
+    results?: { formatted_address: string; types: string[]; partial_match?: boolean; geometry: { location: Point } }[];
   };
   const first = data.results?.[0];
+  // Too broad (state/country) or fuzzy: look up the place itself (terminals, companies, landmarks).
+  const vague = !first || first.partial_match || first.types.some((t) => t === "administrative_area_level_1" || t === "country");
+  if (vague) {
+    const place = await searchPlace(address);
+    if (place) return place;
+  }
   if (data.status !== "OK" || !first) throw new Error(`Endereço não encontrado: ${address}`);
   return { point: first.geometry.location, label: first.formatted_address };
 }
@@ -49,10 +66,10 @@ export const planRoute = createServerFn({ method: "POST" })
       const json = (await res.json()) as { routes?: R[] };
       return json.routes?.[0]?.distanceMeters ? json.routes[0] : undefined;
     };
-    // Prefer Google's own address resolution (snaps to roads), then fall back to geocoded points.
+    // Route between resolved points; fall back to Google's address resolution.
     const route =
-      (await compute({ address: `${data.origin}, Brasil` }, { address: `${data.destination}, Brasil` })) ??
-      (await compute(ll(o.point), ll(d.point)));
+      (await compute(ll(o.point), ll(d.point))) ??
+      (await compute({ address: `${o.label}` }, { address: `${d.label}` }));
     if (!route?.distanceMeters) throw new Error("Não foi encontrada rota rodoviária entre os endereços. Tente incluir cidade e estado (ex: Cuiabá, MT).");
     const leg = route.legs?.[0];
     const toPoint = (x: { latitude: number; longitude: number } | undefined, f: Point) => (x ? { lat: x.latitude, lng: x.longitude } : f);
