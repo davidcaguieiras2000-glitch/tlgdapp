@@ -11,9 +11,9 @@ export function getCityPoint(city: string) {
   return cityCoordinates[normalizeCity(city)];
 }
 
-export function costsForKm(km: number) {
-  const liters = km / BUS_KM_PER_LITER;
-  return { km, liters, fuel: liters * DIESEL_PRICE, toll: km * TOLL_PER_KM, maintenance: km * MAINTENANCE_PER_KM };
+export function costsForKm(km: number, opts: { kmPerLiter?: number; fuel?: number; maint?: number; toll?: number } = {}) {
+  const liters = (km / (opts.kmPerLiter ?? BUS_KM_PER_LITER)) * (opts.fuel ?? 1);
+  return { km, liters, fuel: liters * DIESEL_PRICE, toll: km * TOLL_PER_KM * (opts.toll ?? 1), maintenance: km * MAINTENANCE_PER_KM * (opts.maint ?? 1) };
 }
 
 export function estimateRoute(origin: string, destination: string) {
