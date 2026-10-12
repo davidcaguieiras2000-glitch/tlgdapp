@@ -20,13 +20,13 @@ export const tolls = [
 ];
 
 export const demand = [
-  ["06:00 — 09:00", "Manhã", "Pico alto", "high", "Deslocamentos executivos e viagens intermunicipais de ida"],
-  ["12:00 — 14:00", "Tarde", "Pico médio", "high", "Horário de almoço, fretamentos e viagens curtas"],
-  ["17:00 — 20:00", "Tarde/Noite", "Pico alto", "high", "Retorno para casa e início de viagens interestaduais noturnas"],
-  ["22:00 — 23:59", "Noite", "Pico médio", "high", "Saída de ônibus interestaduais leito e semi-leito"],
-  ["01:00 — 05:00", "Madrugada", "Baixa demanda", "low", "Poucas viagens programadas, ideal para manutenção"],
-  ["09:00 — 12:00", "Manhã/Tarde", "Baixa demanda", "low", "Janela de menor movimento para revisões preventivas"],
-];
+  ["06:00 — 09:00", "Manhã", "Pico alto", "high", "Deslocamentos executivos e viagens intermunicipais de ida", "Início do expediente, estudantes e chegada de passageiros de viagens noturnas.", "Ocupação média de 85–95%. Priorize saídas às 6h e 7h e considere tarifa cheia."],
+  ["12:00 — 14:00", "Tarde", "Pico médio", "high", "Horário de almoço, fretamentos e viagens curtas", "Retorno de compromissos da manhã e conexões em rodoviárias.", "Ocupação de 60–70%. Bom para linhas curtas; use ônibus de menor capacidade."],
+  ["17:00 — 20:00", "Tarde/Noite", "Pico alto", "high", "Retorno para casa e início de viagens interestaduais noturnas", "Fim do expediente e sextas/vésperas de feriado com alta procura.", "Ocupação de 90–100%. Reforce a frota e programe viagens extras; maior lucro do dia."],
+  ["22:00 — 23:59", "Noite", "Pico médio", "high", "Saída de ônibus interestaduais leito e semi-leito", "Passageiros preferem viajar dormindo e economizar diária de hotel.", "Ocupação de 70–85%. Leito e semi-leito rendem passagens mais caras."],
+  ["01:00 — 05:00", "Madrugada", "Baixa demanda", "low", "Poucas viagens programadas, ideal para manutenção", "Baixa procura e rodoviárias com pouco movimento.", "Ocupação abaixo de 30%. Evite saídas; use para manutenção e abastecimento."],
+  ["09:00 — 12:00", "Manhã/Tarde", "Baixa demanda", "low", "Janela de menor movimento para revisões preventivas", "Passageiros já estão no trabalho ou estudo.", "Ocupação de 30–45%. Ofereça tarifa promocional para encher o ônibus ou faça revisões."],
+] as const;
 
 export const cityCoordinates: Record<string, { lat: number; lng: number }> = {
   "belo horizonte": { lat: -19.9167, lng: -43.9345 },

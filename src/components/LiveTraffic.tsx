@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Activity } from "lucide-react";
 import { Card } from "./Ui";
+import { TrafficMap } from "./TrafficMap";
+import { WeatherPanel } from "./WeatherPanel";
 import { RefreshButton } from "./RefreshButton";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +27,7 @@ export function LiveTraffic() {
         <h2 className="flex items-center gap-2 text-xl font-bold"><Activity className="animate-pulse text-primary" /> Trânsito agora</h2>
         <RefreshButton onRefresh={tick} />
       </div>
+      <div className="mb-5 space-y-5"><TrafficMap/><WeatherPanel/></div>
       <div className="grid gap-3 sm:grid-cols-2">
         {roads.map(([name, place], i) => {
           const lv = state[i] ?? 0;
@@ -40,7 +43,7 @@ export function LiveTraffic() {
           );
         })}
       </div>
-      <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground"><span>Condições demonstrativas, atualizadas a cada 30 s.</span><Link to="/transito" className="text-primary">Ver tudo →</Link></div>
+      <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground"><span>Mapa com trânsito do Google Maps em tempo real; lista abaixo é demonstrativa.</span><Link to="/transito" className="text-primary">Ver tudo →</Link></div>
     </Card>
   );
 }
