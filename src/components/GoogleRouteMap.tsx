@@ -19,7 +19,7 @@ declare global {
 
 let mapsPromise: Promise<void> | undefined;
 
-function loadGoogleMaps() {
+export function loadGoogleMaps() {
   if (typeof window === "undefined") return Promise.resolve();
   if (window.google?.maps) return Promise.resolve();
   if (mapsPromise) return mapsPromise;
