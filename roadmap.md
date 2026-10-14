@@ -10,3 +10,7 @@
 - [x] Animated auto-refresh (30s) buttons
 - [x] SMS login page with profiles
 - [ ] SMS sending: user must enable Phone sign-in with an SMS provider in Cloud auth settings
+- [x] Increase app-wide text sizes (theme --text-* scale + body font-size)
+- [x] Trânsito: remove map/weather graphics, enlarge level labels (Baixo/Médio/Alto/Crítico)
+- [ ] Cálculo de Rota: keep only "Destino por estado" + optional destination address; remove the origin fields — awaiting user's answer on what the route's starting point should be
+- [ ] Swap TLGD logo for the new one the user sent (WhatsApp Image 2026-10-09 at 17.46.57 (1).jpeg)

@@ -11,3 +11,4 @@
 
 - Keep TLGD operational sections as separate TanStack routes sharing one app shell, so navigation remains deep-linkable and consistent.
 - Render maps with the Google Maps browser key, while route-cost estimates stay deterministic and user-triggered to avoid an open billable API proxy.
+- Keep the app's reading size in one place: raise or lower text by editing the `--text-*` scale and `body` font-size in `src/styles.css`, and let components use plain `text-*` utilities instead of per-component sizes, so the whole app scales together.
