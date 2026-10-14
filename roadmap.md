@@ -12,5 +12,5 @@
 - [ ] SMS sending: user must enable Phone sign-in with an SMS provider in Cloud auth settings
 - [x] Increase app-wide text sizes (theme --text-* scale + body font-size)
 - [x] Trânsito: remove map/weather graphics, enlarge level labels (Baixo/Médio/Alto/Crítico)
-- [x] Cálculo de Rota: removed "Origem por estado" — origin is now a single address field; destination keeps "Destino por estado" + optional destination address
+- [x] Cálculo de Rota: destination is one control — "Destino por estado" now also accepts any typed address (Enter or "Usar endereço"); separate "Endereço de destino (opcional)" removed
 - [ ] Swap TLGD logo for the new one the user sent (WhatsApp Image 2026-10-09 at 17.46.57 (1).jpeg)
