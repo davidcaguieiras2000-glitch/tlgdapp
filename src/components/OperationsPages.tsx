@@ -1,10 +1,8 @@
-import { TrafficMap } from "./TrafficMap";
-import { WeatherPanel } from "./WeatherPanel";
 import { RefreshButton } from "./RefreshButton";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { BusFront, Calculator, Fuel, MapPin, Plus, RefreshCw, Search, Signpost, Trash2, Users, Wrench, WalletCards } from "lucide-react";
 import { Button } from "./Button";
-import { Card, DemandPanel, Field, PageIntro, Severity, Stat } from "./Ui";
+import { Card, DemandPanel, Field, PageIntro, Stat } from "./Ui";
 import { fuels, routes as initialRoutes, tolls } from "@/lib/tlgd-data";
 import { BUS_KM_PER_LITER, costsForKm, DIESEL_PRICE, MAINTENANCE_PER_KM, TOLL_PER_KM } from "@/lib/route-estimate";
 import { planRoute } from "@/lib/route.functions";
