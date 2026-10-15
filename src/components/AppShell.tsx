@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { BusFront, Calculator, CarFront, Fuel, Gauge, LayoutGrid, Menu, MessageCircle, Route as RouteIcon, Signpost, X } from "lucide-react";
-import logo from "@/assets/tlgd-logo.jpg.asset.json";
+import logo from "@/assets/tlgd-logo-blue-v2.jpg.asset.json";
 import { cn } from "@/lib/utils";
 
 const nav = [
@@ -15,11 +15,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const name = "David Aguieiras";
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className={cn("min-h-screen bg-background text-foreground", pathname === "/" && "operations-shell")}>
       <header className="sticky top-0 z-40 border-b border-border bg-header/95 backdrop-blur">
         <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link to="/" aria-label="TLGD — Painel" className="flex items-center gap-3">
-            <img src={logo.url} alt="TLGD" className="h-9 w-auto max-w-36 object-contain" />
+            <img src={logo.url} alt="TLGD" className="h-12 w-auto max-w-44 object-contain" />
           </Link>
           <button aria-label="Abrir menu" onClick={() => setOpen(true)} className="grid size-11 place-items-center rounded-md text-muted-foreground transition hover:bg-secondary hover:text-foreground">
             <Menu size={25} />
@@ -30,7 +30,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {open && <button aria-label="Fechar menu" className="fixed inset-0 z-40 bg-overlay" onClick={() => setOpen(false)} />}
       <aside className={cn("fixed inset-y-0 left-0 z-50 flex w-[86%] max-w-sm flex-col border-r border-border bg-header shadow-2xl transition-transform duration-300", open ? "translate-x-0" : "-translate-x-full")}>
         <div className="flex h-20 items-center justify-between border-b border-border px-6">
-          <img src={logo.url} alt="TLGD" className="h-10 w-auto max-w-40 object-contain" />
+          <img src={logo.url} alt="TLGD" className="h-12 w-auto max-w-44 object-contain" />
           <button aria-label="Fechar menu" onClick={() => setOpen(false)} className="grid size-10 place-items-center text-muted-foreground hover:text-foreground"><X /></button>
         </div>
         <nav className="flex-1 space-y-2 overflow-y-auto p-5">
