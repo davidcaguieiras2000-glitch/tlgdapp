@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { BusFront, Calculator, CarFront, Fuel, Gauge, LayoutGrid, Menu, MessageCircle, Route as RouteIcon, Signpost, X } from "lucide-react";
-import logo from "@/assets/tlgd-logo-blue.jpg.asset.json";
+import logo from "@/assets/tlgd-logo-blue-v2.jpg.asset.json";
 import { cn } from "@/lib/utils";
 
 const nav = [
@@ -15,7 +15,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const name = "David Aguieiras";
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className={cn("min-h-screen bg-background text-foreground", pathname === "/" && "operations-shell")}>
       <header className="sticky top-0 z-40 border-b border-border bg-header/95 backdrop-blur">
         <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link to="/" aria-label="TLGD — Painel" className="flex items-center gap-3">
