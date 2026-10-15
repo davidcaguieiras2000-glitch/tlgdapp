@@ -14,4 +14,4 @@
 - [x] Trânsito: remove map/weather graphics, enlarge level labels (Baixo/Médio/Alto/Crítico)
 - [x] Cálculo de Rota: destination is one control — "Destino por estado" now also accepts any typed address (Enter or "Usar endereço"); separate "Endereço de destino (opcional)" removed
 - [x] Cálculo de Rota: origin field now offers the same options — choose by state → municipality (with search) or type any address
-- [ ] Apply the October 14 TLGD logo, matching blue/black/white Operations Dashboard colors, and favicon; verify the result.
+- [x] Apply the October 14 TLGD logo, matching blue/black/white Operations Dashboard colors, and favicon; verify the result.
